@@ -1,1 +1,2 @@
-This repository hosts all of my progress in experiemnting with different models and bits of code to refer back to.
+This repository hosts all of my progress in experiemnting with SQL to develop my skills in querying databases.
+My end goal is to work on simulated projects that reflect real world problems and successfully interpret the story in the provided data.
