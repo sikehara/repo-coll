@@ -107,3 +107,148 @@ WHERE column IS/IS NOT NULL
 AND/OR another_condition
 AND/OR …;
 "
+
+"
+AS helps process data in the query
+-
+SELECT col_expression AS expr_description, …
+FROM mytable;
+-
+SELECT column AS better_column_name, …
+FROM a_long_widgets_table_name AS mywidgets
+INNER JOIN widget_sales
+  ON mywidgets.id = widget_sales.widget_id;
+"
+
+"
+SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+FROM mytable
+WHERE constraint_expression;
+-
+Includes COUNT(*)/COUNT(col), MIN(col), MAX(col), AVG(col), SUM(col)
+"
+
+"
+GROUP BY groups rows that have the same value in the column specified
+-
+SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+FROM mytable
+WHERE constraint_expression
+GROUP BY column;
+"
+
+"
+Having allows filtering of groups as group by comes after where conditions are set
+SELECT group_by_column, AGG_FUNC(column_expression) AS aggregate_result_alias, …
+FROM mytable
+WHERE condition
+GROUP BY column
+HAVING group_condition;
+"
+
+"
+COMPLETE QUERY
+-
+SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+FROM mytable
+    JOIN another_table
+      ON mytable.column = another_table.column
+    WHERE constraint_expression
+    GROUP BY column
+    HAVING constraint_expression
+    ORDER BY column ASC/DESC
+    LIMIT count OFFSET COUNT;
+"
+
+"
+Insert statement with values for all columns
+-
+INSERT INTO mytable
+VALUES (value_or_expr, another_value_or_expr, …),
+       (value_or_expr_2, another_value_or_expr_2, …),
+       …;
+"
+
+"
+Insert statement with specific columns
+-
+INSERT INTO mytable
+(column, another_column, …)
+VALUES (value_or_expr, another_value_or_expr, …),
+      (value_or_expr_2, another_value_or_expr_2, …),
+      …;
+"
+
+"
+Update statement with values
+always write the constraint first and test it in a
+SELECT query to make sure you are updating the right rows,
+and only then writing the column/value pairs to update
+-
+UPDATE mytable
+SET column = value_or_expr, 
+    other_column = another_value_or_expr, 
+    …
+WHERE condition;
+"
+
+"
+Delete statement with condition
+run the constraint in a SELECT query first
+to ensure that you are removing the right rows
+-
+DELETE FROM mytable
+WHERE condition;
+"
+
+"
+Create table statement w/ optional table constraint and default value
+-
+CREATE TABLE IF NOT EXISTS mytable (
+    column DataType TableConstraint DEFAULT default_value,
+    another_column DataType TableConstraint DEFAULT default_value,
+    …
+);
+-
+EXAMPLE: Movies table schema
+CREATE TABLE movies (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    director TEXT,
+    year INTEGER, 
+    length_minutes INTEGER
+);
+"
+
+"
+Altering table to add new column(s)
+In some databases like MySQL, you can even
+specify where to insert the new column using
+the FIRST or AFTER clauses, though this is not
+a standard feature
+-
+ALTER TABLE mytable
+ADD column DataType OptionalTableConstraint 
+    DEFAULT default_value;
+"
+
+"
+Altering table to remove column(s)
+some databases don't support this feature; instead
+create a new table and migrate the data over
+-
+ALTER TABLE mytable
+DROP column_to_be_deleted;"
+
+"
+Altering table name
+-
+ALTER TABLE mytable
+RENAME TO new_table_name;
+"
+
+"
+Drop table statement
+-
+DROP TABLE IF EXISTS mytable;
+"
